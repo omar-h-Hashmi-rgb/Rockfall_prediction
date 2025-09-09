@@ -1,0 +1,30 @@
+{
+  "short_name": "RockFall AI",
+  "name": "RockFall AI Predictor - Mining Safety Dashboard",
+  "description": "AI-powered rockfall prediction and alert system for open-pit mines",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ff6b35",
+  "background_color": "#1a1a1a",
+  "categories": ["productivity", "business", "utilities"],
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US"
+}

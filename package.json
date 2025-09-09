@@ -1,0 +1,39 @@
+{
+  "name": "rockfall-prediction-system",
+  "version": "1.0.0",
+  "description": "AI-Based Rockfall Prediction and Alert System for Open-Pit Mines",
+  "main": "index.js",
+  "scripts": {
+    "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
+    "dev": "docker-compose up -d",
+    "dev:logs": "docker-compose logs -f",
+    "build": "docker-compose build",
+    "stop": "docker-compose down",
+    "clean": "docker-compose down -v && docker system prune -f",
+    "train": "cd backend && python scripts/train_model.py",
+    "generate-data": "cd backend && python scripts/generate_sample_data.py",
+    "test": "cd backend && python -m pytest tests/ && cd ../frontend && npm test",
+    "lint": "cd backend && flake8 . && cd ../frontend && npm run lint",
+    "docs": "cd backend && python -m pydoc -w . && cd ../frontend && npm run build-storybook"
+  },
+  "keywords": [
+    "ai",
+    "machine-learning",
+    "rockfall-prediction",
+    "mining-safety",
+    "geotechnical",
+    "alert-system",
+    "real-time-monitoring",
+    "risk-assessment"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/rockfall-prediction-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/rockfall-prediction-system/issues"
+  },
+  "homepage": "https://github.com/your-username/rockfall-prediction-system#readme"
+}

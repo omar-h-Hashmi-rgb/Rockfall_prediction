@@ -4,17 +4,16 @@
   "description": "AI-Based Rockfall Prediction and Alert System for Open-Pit Mines",
   "main": "index.js",
   "scripts": {
-    "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
-    "dev": "docker-compose up -d",
-    "dev:logs": "docker-compose logs -f",
-    "build": "docker-compose build",
-    "stop": "docker-compose down",
-    "clean": "docker-compose down -v && docker system prune -f",
+    "setup": "npm run setup:backend && npm run setup:frontend",
+    "setup:backend": "cd backend && python -m venv venv && .\\venv\\Scripts\\Activate.ps1 && pip install -r requirements.txt",
+    "setup:frontend": "cd frontend && npm install",
+    "dev:backend": "cd backend && .\\venv\\Scripts\\Activate.ps1 && uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "train": "cd backend && python scripts/train_model.py",
     "generate-data": "cd backend && python scripts/generate_sample_data.py",
     "test": "cd backend && python -m pytest tests/ && cd ../frontend && npm test",
-    "lint": "cd backend && flake8 . && cd ../frontend && npm run lint",
-    "docs": "cd backend && python -m pydoc -w . && cd ../frontend && npm run build-storybook"
+    "lint": "cd backend && flake8 . && cd ../frontend && npm run lint"
   },
   "keywords": [
     "ai",
@@ -26,14 +25,17 @@
     "real-time-monitoring",
     "risk-assessment"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Omar Hashmi <omar.hashmi@example.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/rockfall-prediction-system.git"
+    "url": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/rockfall-prediction-system/issues"
+    "url": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI/issues"
   },
-  "homepage": "https://github.com/your-username/rockfall-prediction-system#readme"
+  "homepage": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

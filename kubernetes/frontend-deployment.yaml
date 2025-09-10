@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rockfall-frontend
+  namespace: rockfall-system
+  labels:
+    app: rockfall-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rockfall-frontend
+  template:
+    metadata:
+      labels:
+        app: rockfall-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: rockfall-prediction:latest
+        ports:
+        - containerPort: 8501
+        env:
+        - name: API_BASE
+          value: "http://rockfall-api-service:8000"
+        command: ["streamlit", "run", "streamlit_app/app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8501
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "250m"
+        volumeMounts:
+        - name: data-volume
+          mountPath: /app/data
+          readOnly: true
+      volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rockfall-frontend-service
+  namespace: rockfall-system
+spec:
+  selector:
+    app: rockfall-frontend
+  ports:
+  - protocol: TCP
+    port: 8501
+    targetPort: 8501
+  type: LoadBalancer

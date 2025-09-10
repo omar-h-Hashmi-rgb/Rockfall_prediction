@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rockfall-system
+  labels:
+    name: rockfall-system
+    app.kubernetes.io/name: rockfall-prediction
+    app.kubernetes.io/version: "1.0.0"

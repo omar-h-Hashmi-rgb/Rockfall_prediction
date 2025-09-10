@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-init-script
+  namespace: rockfall-system
+data:
+  init-mongo.js: |
+    // MongoDB initialization script
+    db = db.getSiblingDB('rockfall_db');
+    
+    db.createCollection('sensors');
+    db.createCollection('alerts');
+    db.createCollection('predictions');
+    db.createCollection('users');
+    
+    db.sensors.createIndex({ "timestamp": -1 });
+    db.sensors.createIndex({ "sensor_type": 1, "timestamp": -1 });
+    
+    db.alerts.createIndex({ "timestamp": -1 });
+    db.alerts.createIndex({ "type": 1, "timestamp": -1 });
+    
+    db.predictions.createIndex({ "timestamp": -1 });
+    db.predictions.createIndex({ "risk_class": 1 });
+    
+    db.users.createIndex({ "username": 1 }, { unique: true });
+    
+    print("✅ Rockfall database initialized!");

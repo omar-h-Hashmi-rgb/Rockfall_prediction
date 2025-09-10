@@ -1,78 +1,77 @@
-# Environment Variables
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Environment variables
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.production
 
 # Database
 *.db
-*.sqlite
 *.sqlite3
 
 # Logs
-logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+logs/
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
+# ML artifacts
+ml/artifacts/
+*.pkl
+*.joblib
+*.h5
+*.onnx
 
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
+# Data files (comment out if you want to track sample data)
+data/sensors/*.csv
+data/Sub_Division_IMD.json
+data/DroneImages/
 
-# nyc test coverage
-.nyc_output
-
-# Dependency directories
-node_modules/
-
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
+# Temporary files
 tmp/
 temp/
-
-# Editor directories and files
-.vscode/
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.tmp
 
 # OS generated files
 .DS_Store
@@ -83,18 +82,35 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Mining Data (Large Files)
-*.large
-*.heavy
-data/large_datasets/
-data/raw_images/
-data/backup/
+# Streamlit
+.streamlit/secrets.toml
 
-# Docker
-.docker/
-docker-compose.override.yml
+# FastAPI
+.pytest_cache/
 
-# Build artifacts
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Distribution / packaging
+.Python
 build/
+develop-eggs/
 dist/
-*.tar.gz
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

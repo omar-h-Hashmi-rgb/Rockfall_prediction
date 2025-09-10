@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rockfall-api
+  namespace: rockfall-system
+  labels:
+    app: rockfall-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rockfall-api
+  template:
+    metadata:
+      labels:
+        app: rockfall-api
+    spec:
+      containers:
+      - name: api
+        image: rockfall-prediction:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mongodb-uri
+        - name: MONGODB_DB
+          value: "rockfall_db"
+        - name: SENDGRID_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: sendgrid-api-key
+        - name: SMS77IO_RAPIDAPI_KEY
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: sms77-api-key
+        - name: MAPMYINDIA_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: app-secrets
+              key: mapmyindia-token
+        command: ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        volumeMounts:
+        - name: model-artifacts
+          mountPath: /app/ml/artifacts
+        - name: data-volume
+          mountPath: /app/data
+      volumes:
+      - name: model-artifacts
+        persistentVolumeClaim:
+          claimName: model-artifacts-pvc
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: data-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rockfall-api-service
+  namespace: rockfall-system
+spec:
+  selector:
+    app: rockfall-api
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: ClusterIP

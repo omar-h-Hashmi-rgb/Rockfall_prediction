@@ -1,41 +1,47 @@
 {
-  "name": "rockfall-prediction-system",
+  "name": "ai-rockfall-prediction-system",
   "version": "1.0.0",
-  "description": "AI-Based Rockfall Prediction and Alert System for Open-Pit Mines",
-  "main": "index.js",
-  "scripts": {
-    "setup": "npm run setup:backend && npm run setup:frontend",
-    "setup:backend": "cd backend && python -m venv venv && .\\venv\\Scripts\\Activate.ps1 && pip install -r requirements.txt",
-    "setup:frontend": "cd frontend && npm install",
-    "dev:backend": "cd backend && .\\venv\\Scripts\\Activate.ps1 && uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "train": "cd backend && python scripts/train_model.py",
-    "generate-data": "cd backend && python scripts/generate_sample_data.py",
-    "test": "cd backend && python -m pytest tests/ && cd ../frontend && npm test",
-    "lint": "cd backend && flake8 . && cd ../frontend && npm run lint"
+  "description": "AI-based rockfall prediction and alert system for mining safety",
+  "author": "Omar H. Hashmi <omar.hashmi.rgb@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omar-h-Hashmi-rgb/ai-rockfall-system.git"
   },
   "keywords": [
     "ai",
     "machine-learning",
     "rockfall-prediction",
     "mining-safety",
-    "geotechnical",
-    "alert-system",
-    "real-time-monitoring",
-    "risk-assessment"
+    "iot-sensors",
+    "fastapi",
+    "streamlit",
+    "python",
+    "mongodb",
+    "docker",
+    "kubernetes"
   ],
-  "author": "Omar Hashmi <omar.hashmi@example.com>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI.git"
+  "scripts": {
+    "setup": "chmod +x deploy.sh && ./deploy.sh setup",
+    "start": "chmod +x deploy.sh && ./deploy.sh native",
+    "docker": "chmod +x deploy.sh && ./deploy.sh docker", 
+    "stop": "chmod +x deploy.sh && ./deploy.sh stop",
+    "health": "chmod +x deploy.sh && ./deploy.sh health",
+    "clean": "chmod +x deploy.sh && ./deploy.sh clean"
   },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.8.0"
+  },
+  "main": "backend/main.py",
+  "directories": {
+    "lib": "ml/",
+    "doc": "docs/",
+    "test": "tests/"
+  },
+  "homepage": "https://github.com/omar-h-Hashmi-rgb/ai-rockfall-system#readme",
   "bugs": {
-    "url": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI/issues"
-  },
-  "homepage": "https://github.com/omar-h-Hashmi-rgb/RockGuard_AI#readme",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+    "url": "https://github.com/omar-h-Hashmi-rgb/ai-rockfall-system/issues"
   }
 }

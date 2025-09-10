@@ -1,520 +1,289 @@
-# AI-Based Rockfall Prediction and Alert System
+# 🪨 AI-Based Rockfall Prediction & Alert System
 
-An advanced AI-powered system for predicting rockfall risks in open-pit mines using multi-source data integration, real-time monitoring, and automated alert mechanisms.
+A comprehensive, end-to-end system that combines environmental data, geotechnical sensors, and drone imagery to predict rockfall probability and trigger automated alerts for mining safety operations.
 
-## 🏗️ System Architecture
+## 🌟 Features
+
+- **Multi-Modal Data Integration**: Environmental JSON, sensor time-series, and drone imagery
+- **Real-time Risk Assessment**: ML-powered probability scoring with LOW/MEDIUM/HIGH classification
+- **Interactive Dashboard**: Streamlit web interface with MapMyIndia integration
+- **Automated Alerts**: Email (SendGrid) and SMS (SMS77) notifications
+- **RESTful API**: FastAPI backend with MongoDB storage
+- **Scalable Architecture**: Modular design for easy expansion
+
+## 🏗️ Architecture
 
 ```
-├── Backend (Python + FastAPI)
-│   ├── AI/ML Models (Rockfall Prediction)
-│   ├── Data Processing (DEM, Sensors, Imagery)
-│   ├── Alert System (Email + SMS)
-│   └── API Integration (MapMyIndia)
-├── Frontend (React + Clerk Auth)
-│   ├── Real-time Dashboard
-│   ├── Risk Visualization
-│   ├── Alert Management
-│   └── Data Analytics
-└── Database (MongoDB)
-    ├── Sensor Data
-    ├── Predictions
-    ├── Alerts
-    └── User Profiles
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Streamlit     │    │    FastAPI      │    │    MongoDB      │
+│   Frontend      │◄──►│    Backend      │◄──►│    Database     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       
+         │                       ▼                       
+         │              ┌─────────────────┐              
+         │              │  ML Pipeline    │              
+         │              │  (RandomForest) │              
+         │              └─────────────────┘              
+         │                       │                       
+         ▼                       ▼                       
+┌─────────────────┐    ┌─────────────────┐              
+│  External APIs  │    │  Alert Services │              
+│  (MapMyIndia)   │    │ (Email + SMS)   │              
+└─────────────────┘    └─────────────────┘              
 ```
 
-## 🚀 Features
+## 🚀 Quick Start
 
-### AI/ML Capabilities
-- **Multi-source Data Fusion**: Combines DEM, drone imagery, sensor data, and environmental factors
-- **Real-time Prediction**: Risk probability assessment with 85%+ accuracy
-- **Risk Classification**: Low/Medium/High risk categories with confidence scores
-- **Temporal Analysis**: 24-hour forecast with trend prediction
+### 1. Clone and Setup
+```bash
+git clone <repository-url>
+cd ai-rockfall-system
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-### Dashboard & Visualization
-- **Interactive Risk Maps**: Real-time heat maps with MapMyIndia integration
-- **Sensor Monitoring**: Live geotechnical sensor data visualization
-- **Drone Imagery Analysis**: AI-generated risk masks and overlays
-- **Alert Management**: Configure thresholds, recipients, and notification preferences
+### 2. Environment Configuration
+```bash
+cp .env.example .env
+# Edit .env with your API keys and MongoDB URI
+```
 
-### Alert System
-- **Multi-channel Alerts**: Email (SendGrid) + SMS (Sms77.io)
-- **Threshold-based Triggers**: Customizable risk probability thresholds
-- **Escalation Matrix**: Role-based alert distribution
-- **Real-time Notifications**: Browser notifications for immediate alerts
+### 3. Generate Sample Data
+```bash
+python scripts/seed_sensors.py
+```
+
+### 4. Train the Model
+```bash
+cd ml
+python train.py
+cd ..
+```
+
+### 5. Start Backend API
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
+
+### 6. Launch Frontend
+```bash
+streamlit run streamlit_app/app.py
+```
 
 ## 📊 Data Sources
 
-### 1. Digital Elevation Models (DEM)
-- **Location**: `backend/data/synthetic/dem_data.py`
-- **Features**: Elevation, slope, aspect, roughness
-- **Coverage**: 1km² grid with open-pit terrain simulation
+### Environmental Data (`data/Sub_Division_IMD.json`)
+- Rainfall measurements
+- Temperature readings
+- Atmospheric conditions
+- Timestamp-indexed records
 
-### 2. Drone Imagery
-- **Location**: `backend/data/DroneImages/FilteredData/`
-- **Structure**:
-  ```
-  ├── Images/      (1000+ drone captured images)
-  ├── Masks/       (AI-generated risk masks)
-  └── BinaryMasks/ (Binary classification masks)
-  ```
+### Geotechnical Sensors (`data/sensors/*.csv`)
+- **Displacement**: Ground movement measurements
+- **Strain**: Rock stress indicators
+- **Pore Pressure**: Groundwater pressure
+- **Vibrations**: Seismic activity
 
-### 3. Sensor Data
-- **Location**: `backend/data/synthetic/sensor_data.py`
-- **Metrics**: Displacement, strain, pore pressure, vibrations
-- **Frequency**: Hourly readings from 20+ sensors
+### Drone Imagery (`data/DroneImages/FilteredData/`)
+- **Images**: Raw drone photographs
+- **Masks**: Segmentation masks
+- **BinaryMasks**: Binary classification masks
 
-### 4. Environmental Data
-- **Location**: `backend/data/Sub_Division_IMD.json` (Your file goes here)
-- **Content**: Rainfall, temperature, weather patterns
+## 🧠 Machine Learning Pipeline
 
-## 🛠️ Installation & Setup
+### Feature Engineering
+- Time-based aggregations (rolling windows, lags)
+- Cross-sensor correlations
+- Weather-geology interactions
+- Image summary statistics
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- MongoDB 7.0+
-- Docker & Docker Compose
+### Model Architecture
+- **Algorithm**: Random Forest Classifier
+- **Features**: 20+ engineered variables
+- **Output**: Risk probability (0-1) + classification (LOW/MEDIUM/HIGH)
+- **Performance**: Target AUC > 0.75
 
-### Environment Variables
+### Risk Classification
+- **LOW**: 0.0 - 0.33
+- **MEDIUM**: 0.33 - 0.66  
+- **HIGH**: 0.66 - 1.0
 
-#### Backend (`backend/.env`)
-```env
-# Database
-MONGODB_URL=mongodb://localhost:27017
-DATABASE_NAME=rockfall_prediction
+## 🌐 API Endpoints
 
-# MapMyIndia API
-MAPMYINDIA_ACCESS_TOKEN=your_access_token_here
-MAPMYINDIA_API_BASE_URL=https://apis.mapmyindia.com/advancedmaps/v1
-
-# SendGrid API
-SENDGRID_API_KEY=your_sendgrid_api_key_here
-
-# SMS77.io API
-SMS77IO_RAPIDAPI_KEY=your_rapidapi_key_here
-SMS77IO_HOST=sms77io.p.rapidapi.com
-
-# API Settings
-API_HOST=0.0.0.0
-API_PORT=8000
+### Health Check
 ```
-
-#### Frontend (`frontend/.env`)
-```env
-VITE_CLERK_PUBLISHABLE_KEY=YOUR_PUBLISHABLE_KEY
-VITE_API_BASE_URL=http://localhost:8000
+GET /api/health
 ```
-
-### Quick Start with Docker
-
-1. **Clone and Setup**
-   ```bash
-   git clone <repository-url>
-   cd rockfall-prediction-system
-   ```
-
-2. **Add Your Data Files**
-   ```bash
-   # Place your JSON file
-   cp Sub_Division_IMD.json backend/data/
-   
-   # Add your drone images (1000+ images each)
-   cp -r YourDroneImages/* backend/data/DroneImages/FilteredData/
-   ```
-
-3. **Start Services**
-   ```bash
-   docker-compose up -d
-   ```
-
-4. **Access Applications**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - MongoDB: mongodb://localhost:27017
-
-### Manual Installation
-
-#### Backend Setup
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-
-# Start the API server
-uvicorn api.app:app --host 0.0.0.0 --port 8000 --reload
-```
-
-#### Frontend Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-#### Database Setup
-```bash
-# Install MongoDB locally or use Docker
-docker run -d -p 27017:27017 --name rockfall-mongo mongo:7.0
-```
-
-## 🔧 API Endpoints
 
 ### Predictions
-- `POST /predict` - Make rockfall prediction
-- `GET /predictions/recent` - Get recent predictions
-- `GET /dashboard/stats` - Dashboard statistics
+```
+POST /api/predict
+Body: {
+  "timestamp": "2025-01-01T12:00:00",
+  "rainfall_mm": 25.5,
+  "temperature_c": 22.0,
+  "displacement": 3.2,
+  "strain": 0.8,
+  "pore_pressure": 1.5,
+  "vibrations": 0.4
+}
+```
+
+### Sensor Data
+```
+POST /api/sensors          # Ingest new readings
+GET /api/sensors?limit=200 # Retrieve recent data
+```
 
 ### Alerts
-- `GET /alerts/recent` - Recent alert history
-- `POST /alerts/configure` - Configure alert settings
-
-### Sensors
-- `POST /sensors/data` - Save sensor readings
-- `GET /sensors/data` - Retrieve sensor data
-
-### Maps
-- `GET /map/risk-overlay` - Risk overlay data for maps
-
-## 🎯 Usage Examples
-
-### Making a Prediction
-```python
-import requests
-
-prediction_data = {
-    "elevation": 1450.5,
-    "slope": 35.2,
-    "displacement": 2.1,
-    "strain": 125.3,
-    "pore_pressure": 215.7,
-    "vibrations": 0.08,
-    "coordinates": {
-        "lat": 28.6139,
-        "lon": 77.2090,
-        "sector": "Sector 3"
-    }
-}
-
-response = requests.post("http://localhost:8000/predict", json=prediction_data)
-result = response.json()
-
-print(f"Risk Level: {result['risk_class']}")
-print(f"Probability: {result['risk_probability']:.2%}")
-print(f"Alert Required: {result['alert_required']}")
+```
+POST /api/alerts           # Trigger notifications
+GET /api/alerts?limit=50   # View history
 ```
 
-### Retrieving Sensor Data
-```python
-import requests
+## 🖥️ User Interface
 
-# Get last 24 hours of sensor data
-response = requests.get("http://localhost:8000/sensors/data?hours=24")
-sensor_data = response.json()
+### Dashboard
+- Live risk map with MapMyIndia integration
+- Key performance indicators
+- Recent activity feed
 
-for reading in sensor_data[:5]:  # Show first 5 readings
-    print(f"Time: {reading['timestamp']}")
-    print(f"Displacement: {reading.get('displacement', 'N/A')}mm")
-    print(f"Strain: {reading.get('strain', 'N/A')}μs")
-    print("---")
-```
+### Imagery Viewer
+- Drone image galleries
+- Mask visualizations
+- Batch processing controls
 
-### Frontend Integration
-```jsx
-// Example React component for live risk monitoring
-import { useEffect, useState } from 'react'
-import { useApi } from './hooks/useApi'
+### Sensor Management
+- Real-time data streams
+- Historical trends
+- CSV upload interface
 
-function LiveRiskMonitor() {
-    const { get } = useApi()
-    const [currentRisk, setCurrentRisk] = useState(null)
-
-    useEffect(() => {
-        const fetchRisk = async () => {
-            try {
-                const predictions = await get('/predictions/recent?limit=1')
-                if (predictions.length > 0) {
-                    setCurrentRisk(predictions[0])
-                }
-            } catch (error) {
-                console.error('Error fetching risk data:', error)
-            }
-        }
-
-        fetchRisk()
-        const interval = setInterval(fetchRisk, 30000) // Update every 30 seconds
-        return () => clearInterval(interval)
-    }, [])
-
-    if (!currentRisk) return <div>Loading...</div>
-
-    return (
-        <div className={`risk-indicator ${currentRisk.risk_class.toLowerCase()}`}>
-            <h3>Current Risk Level</h3>
-            <div className="risk-value">
-                {(currentRisk.risk_probability * 100).toFixed(1)}%
-            </div>
-            <div className="risk-class">{currentRisk.risk_class}</div>
-        </div>
-    )
-}
-```
-
-## 🔒 Security Features
-
-### Authentication & Authorization
-- **Clerk Integration**: Secure user authentication with 2FA support
-- **Role-based Access**: Different permission levels (Safety Manager, Operations, Admin)
-- **Session Management**: Configurable session timeouts
-- **IP Whitelisting**: Restrict access to specific IP ranges
-
-### Data Security
-- **Encrypted Storage**: Sensitive data encryption at rest
-- **Secure API**: HTTPS/TLS encryption for all communications
-- **Input Validation**: Comprehensive data validation and sanitization
-- **Audit Logging**: Complete audit trail of all system activities
-
-## 📈 Performance & Monitoring
-
-### Real-time Capabilities
-- **Live Updates**: WebSocket connections for real-time data streaming
-- **Auto-refresh**: Configurable dashboard refresh intervals
-- **Performance Metrics**: System performance monitoring
-- **Error Handling**: Comprehensive error tracking and recovery
-
-### Scalability
-- **Containerized Deployment**: Docker-based scaling
-- **Database Optimization**: Indexed collections for fast queries
-- **Caching**: Redis integration for improved response times
-- **Load Balancing**: Support for multiple backend instances
-
-## 🧪 Testing
-
-### Running Tests
-```bash
-# Backend tests
-cd backend
-python -m pytest tests/ -v
-
-# Frontend tests
-cd frontend
-npm test
-
-# Integration tests
-npm run test:integration
-```
-
-### Test Coverage
-- **Unit Tests**: 90%+ code coverage
-- **Integration Tests**: API endpoint testing
-- **E2E Tests**: Complete user workflow testing
-- **Performance Tests**: Load testing for high-traffic scenarios
-
-## 📚 Documentation
-
-### API Documentation
-- **Interactive Docs**: http://localhost:8000/docs (Swagger UI)
-- **OpenAPI Spec**: http://localhost:8000/openapi.json
-- **Postman Collection**: Available in `/docs/postman/`
-
-### Component Documentation
-- **Storybook**: Interactive component library
-- **Design System**: Complete UI/UX guidelines
-- **Code Examples**: Comprehensive usage examples
-
-## 🚀 Deployment
-
-### Production Deployment
-```bash
-# Build production images
-docker-compose -f docker-compose.prod.yml build
-
-# Deploy to production
-docker-compose -f docker-compose.prod.yml up -d
-
-# Health check
-curl http://your-domain.com/health
-```
-
-### Environment Configuration
-```yaml
-# docker-compose.prod.yml
-version: '3.8'
-services:
-  backend:
-    environment:
-      - MONGODB_URL=mongodb://prod-mongo:27017
-      - API_HOST=0.0.0.0
-      - API_PORT=8000
-    deploy:
-      replicas: 3
-      restart_policy:
-        condition: on-failure
-```
-
-## 🛡️ Monitoring & Alerts
-
-### System Monitoring
-- **Health Checks**: Automated system health monitoring
-- **Performance Metrics**: CPU, memory, and database performance
-- **Error Tracking**: Centralized error logging and alerting
-- **Uptime Monitoring**: 24/7 system availability tracking
-
-### Alert Escalation
-```python
-# Example alert escalation configuration
-ALERT_ESCALATION = {
-    'high_risk': {
-        'immediate': ['safety_manager@mine.com'],
-        'after_5min': ['operations_chief@mine.com'],
-        'after_15min': ['site_manager@mine.com']
-    },
-    'system_failure': {
-        'immediate': ['sysadmin@mine.com', 'it_support@mine.com'],
-        'after_2min': ['cto@mine.com']
-    }
-}
-```
-
-## 📊 Analytics & Reporting
-
-### Dashboard Analytics
-- **Risk Trends**: Historical risk analysis and patterns
-- **Sensor Performance**: Sensor health and accuracy metrics
-- **Alert Effectiveness**: Alert response time and accuracy
-- **System Usage**: User activity and feature utilization
-
-### Custom Reports
-```python
-# Generate risk assessment report
-def generate_risk_report(start_date, end_date):
-    predictions = get_predictions_by_date_range(start_date, end_date)
-    
-    report = {
-        'total_predictions': len(predictions),
-        'high_risk_events': len([p for p in predictions if p['risk_class'] == 'High']),
-        'average_risk': sum(p['risk_probability'] for p in predictions) / len(predictions),
-        'most_active_sectors': get_sector_activity(predictions),
-        'alert_accuracy': calculate_alert_accuracy(predictions)
-    }
-    
-    return report
-```
+### Alert Center
+- Manual alert triggers
+- Notification history
+- Channel preferences
 
 ## 🔧 Configuration
 
-### Model Configuration
-```python
-# backend/config/model_config.py
-MODEL_CONFIG = {
-    'rockfall_predictor': {
-        'algorithm': 'RandomForest',
-        'n_estimators': 100,
-        'max_depth': 10,
-        'feature_importance_threshold': 0.05,
-        'prediction_confidence_threshold': 0.85
-    },
-    'alert_thresholds': {
-        'email': 0.7,
-        'sms': 0.8,
-        'emergency': 0.9
-    },
-    'data_retention': {
-        'predictions': 365,  # days
-        'sensor_data': 730,  # days
-        'alerts': 1095      # days
-    }
-}
+### Required Environment Variables
+```bash
+# Database
+MONGODB_URI=mongodb://localhost:27017
+MONGODB_DB=rockfall_db
+
+# MapMyIndia
+MAPMYINDIA_ACCESS_TOKEN=your_token
+
+# Email Alerts
+SENDGRID_API_KEY=your_key
+ALERT_EMAIL_FROM=alerts@domain.com
+ALERT_EMAIL_TO=team@domain.com
+
+# SMS Alerts  
+SMS77IO_RAPIDAPI_KEY=your_key
+ALERT_SMS_TO=+1234567890
 ```
 
-### Frontend Configuration
-```javascript
-// frontend/src/config/app.config.js
-export const APP_CONFIG = {
-    api: {
-        baseUrl: process.env.VITE_API_BASE_URL,
-        timeout: 10000,
-        retryAttempts: 3
-    },
-    maps: {
-        defaultCenter: { lat: 28.6139, lng: 77.2090 },
-        defaultZoom: 15,
-        riskColors: {
-            low: '#27ae60',
-            medium: '#f39c12',
-            high: '#e74c3c'
-        }
-    },
-    dashboard: {
-        refreshInterval: 30000, // 30 seconds
-        maxDataPoints: 100,
-        chartAnimationDuration: 1000
-    }
-}
+## 🔄 Development Workflow
+
+### Adding New Features
+1. Update ML pipeline in `ml/` directory
+2. Modify API endpoints in `backend/routers/`
+3. Enhance UI in `streamlit_app/pages/`
+4. Test integration end-to-end
+
+### Data Pipeline
+1. Place new data in `data/` directories
+2. Run feature engineering: `python ml/features.py`
+3. Retrain model: `python ml/train.py`
+4. Restart backend to load new model
+
+## 📈 Monitoring & Maintenance
+
+### Model Performance
+- Monitor prediction accuracy
+- Track alert effectiveness
+- Analyze false positive/negative rates
+
+### System Health
+- API response times
+- Database performance
+- External service availability
+
+## 🚨 Alert System
+
+### Email Notifications (SendGrid)
+- Rich HTML formatting
+- Attachment support
+- Delivery tracking
+
+### SMS Alerts (SMS77/RapidAPI)
+- Global coverage
+- Delivery confirmation
+- Rate limiting
+
+### Trigger Conditions
+- High risk probability (>0.66)
+- Rapid sensor value changes
+- Manual operator triggers
+
+## 📦 Production Deployment
+
+### Docker Support (Optional)
+```dockerfile
+FROM python:3.9-slim
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+### Scaling Considerations
+- Load balancer for API
+- MongoDB replica sets
+- Redis for caching
+- CDN for image assets
+
+## 🔍 Troubleshooting
+
+### Common Issues
+1. **Model not found**: Run `python ml/train.py` first
+2. **API connection errors**: Check backend is running on port 8000
+3. **Map not loading**: Verify MapMyIndia token in `.env`
+4. **Alerts not sending**: Validate SendGrid/SMS77 credentials
+
+### Debug Mode
+```bash
+# Backend with debug logging
+uvicorn backend.main:app --reload --log-level debug
+
+# Streamlit with error details
+streamlit run streamlit_app/app.py --logger.level=debug
 ```
 
 ## 🤝 Contributing
 
-### Development Workflow
-1. **Fork the repository**
-2. **Create feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make changes and test**: Ensure all tests pass
-4. **Commit changes**: `git commit -m 'Add amazing feature'`
-5. **Push to branch**: `git push origin feature/amazing-feature`
-6. **Create Pull Request**: Submit for review
-
-### Code Standards
-- **Python**: Follow PEP 8 standards
-- **JavaScript**: Use ESLint configuration
-- **Commits**: Follow conventional commit format
-- **Documentation**: Update docs for new features
-
-### Issue Reporting
-Please use the GitHub issue tracker to report bugs or request features:
-- **Bug Report**: Include steps to reproduce, expected vs actual behavior
-- **Feature Request**: Describe the feature and its use case
-- **Performance Issue**: Include performance metrics and environment details
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/new-feature`
+3. Commit changes: `git commit -am 'Add new feature'`
+4. Push to branch: `git push origin feature/new-feature`
+5. Submit pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👥 Team
+
+- **ML Engineering**: Predictive modeling and feature engineering
+- **Backend Development**: API design and database management  
+- **Frontend Development**: User interface and visualization
+- **DevOps**: Deployment and infrastructure management
 
 ## 🙏 Acknowledgments
 
-- **OpenCV**: Computer vision capabilities for drone imagery analysis
-- **Scikit-learn**: Machine learning algorithms for risk prediction
-- **React**: Frontend framework for interactive dashboard
-- **FastAPI**: High-performance API framework
-- **MongoDB**: Document database for flexible data storage
-- **Clerk**: Authentication and user management
-- **MapMyIndia**: Mapping and geolocation services
-- **SendGrid**: Email delivery service
-- **Sms77.io**: SMS notification service
-
-## 📞 Support
-
-For technical support or questions:
-- **Email**: support@rockfall-ai.com
-- **Documentation**: [Wiki](https://github.com/your-repo/wiki)
-- **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-repo/discussions)
-
-## 🔮 Roadmap
-
-### Version 2.0 (Q1 2024)
-- [ ] Advanced ML models with deep learning
-- [ ] Mobile application for field workers
-- [ ] Integration with IoT sensors
-- [ ] Real-time video analysis
-- [ ] Weather API integration
-
-### Version 3.0 (Q3 2024)
-- [ ] Multi-site management
-- [ ] Predictive maintenance for sensors
-- [ ] AR/VR visualization
-- [ ] Advanced analytics with AI insights
-- [ ] Cloud deployment options
-
----
-
-**Built with ❤️ for mining safety and operational excellence**
+- MapMyIndia for mapping services
+- SendGrid for email infrastructure
+- SMS77 for SMS capabilities
+- Open-source ML and web frameworks

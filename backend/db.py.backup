@@ -1,0 +1,139 @@
+# Create a fixed version
+@"
+from pymongo import MongoClient
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
+import os
+from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
+
+class DatabaseManager:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(DatabaseManager, cls).__new__(cls)
+            cls._instance.client = None
+            cls._instance.db = None
+        return cls._instance
+    
+    def connect(self):
+        if self.client is not None:
+            return True
+            
+        try:
+            mongodb_uri = os.getenv('MONGODB_URI', 'mongodb://localhost:27017')
+            mongodb_db = os.getenv('MONGODB_DB', 'rockfall_db')
+            
+            logger.info(f"Connecting to MongoDB: {mongodb_uri}")
+            
+            self.client = MongoClient(
+                mongodb_uri,
+                serverSelectionTimeoutMS=5000,
+                connectTimeoutMS=5000,
+                socketTimeoutMS=5000
+            )
+            
+            # Test the connection
+            self.client.admin.command('ping')
+            
+            self.db = self.client[mongodb_db]
+            logger.info("✅ MongoDB connection successful")
+            return True
+            
+        except (ConnectionFailure, ServerSelectionTimeoutError) as e:
+            logger.error(f"❌ MongoDB connection failed: {e}")
+            self.client = None
+            self.db = None
+            return False
+        except Exception as e:
+            logger.error(f"❌ Unexpected database error: {e}")
+            self.client = None
+            self.db = None
+            return False
+    
+    def get_collection(self, collection_name: str):
+        if self.db is None:
+            if not self.connect():
+                logger.error("Cannot get collection: database not connected")
+                return None
+        
+        try:
+            return self.db[collection_name]
+        except Exception as e:
+            logger.error(f"Error getting collection {collection_name}: {e}")
+            return None
+    
+    def close(self):
+        if self.client is not None:
+            self.client.close()
+            self.client = None
+            self.db = None
+            logger.info("Database connection closed")
+
+# Global database instance
+db_instance = DatabaseManager()
+
+# Collection shortcuts - with safety checks
+def get_sensors_collection():
+    return db_instance.get_collection('sensors')
+
+def get_alerts_collection():
+    return db_instance.get_collection('alerts')
+
+def get_predictions_collection():
+    return db_instance.get_collection('predictions')
+
+# Initialize collections (with fallback to None if DB not available)
+try:
+    sensors_col = get_sensors_collection()
+    alerts_col = get_alerts_collection()
+    predictions_col = get_predictions_collection()
+except Exception as e:
+    logger.warning(f"Collections not initialized: {e}")
+    sensors_col = None
+    alerts_col = None
+    predictions_col = None
+
+def check_db_health():
+    try:
+        if db_instance.connect():
+            # Test a simple operation
+            db_instance.db.command('ping')
+            
+            collections_info = {}
+            for col_name in ['sensors', 'alerts', 'predictions']:
+                col = db_instance.get_collection(col_name)
+                if col is not None:
+                    count = col.count_documents({})
+                    collections_info[col_name] = {'count': count, 'status': 'healthy'}
+                else:
+                    collections_info[col_name] = {'count': 0, 'status': 'unavailable'}
+            
+            return {
+                'status': 'healthy',
+                'message': 'Database connection successful',
+                'collections': collections_info,
+                'timestamp': datetime.utcnow()
+            }
+    except Exception as e:
+        logger.error(f"Database health check failed: {e}")
+        return {
+            'status': 'unhealthy',
+            'message': f'Database connection failed: {str(e)}',
+            'collections': {},
+            'timestamp': datetime.utcnow()
+        }
+
+def cleanup_db():
+    db_instance.close()
+
+# Auto-connect on import (but don't fail if it doesn't work)
+try:
+    db_instance.connect()
+except Exception as e:
+    logger.warning(f"Initial database connection failed: {e}")
+"@ | Out-File -FilePath backend\db.py -Encoding UTF8
+
+Write-Host "✅ Fixed database connection code" -ForegroundColor Green

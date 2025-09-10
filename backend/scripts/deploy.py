@@ -56,7 +56,7 @@ def main():
     print("🔍 Running health checks...")
     run_command("sleep 30", "Waiting for services to start")
     run_command("curl -f http://localhost:8000/health || exit 1", "Checking backend health")
-    run_command("curl -f http://localhost:3000 || exit 1", "Checking frontend health")
+    run_command("curl -f http://localhost:5173 || exit 1", "Checking frontend health")
     
     # Step 5: Database migrations and model training
     run_command("cd backend && python scripts/train_model.py", "Training AI models")

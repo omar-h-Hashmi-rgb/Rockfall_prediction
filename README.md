@@ -7,7 +7,7 @@ A comprehensive, end-to-end system that combines environmental data, geotechnica
 - **Multi-Modal Data Integration**: Environmental JSON, sensor time-series, and drone imagery
 - **Real-time Risk Assessment**: ML-powered probability scoring with LOW/MEDIUM/HIGH classification
 - **Interactive Dashboard**: Streamlit web interface with MapMyIndia integration
-- **Automated Alerts**: Email (SendGrid) and SMS (SMS77) notifications
+- **Automated Alerts**: Email (Vonage) and SMS (SMS77) notifications
 - **RESTful API**: FastAPI backend with MongoDB storage
 - **Scalable Architecture**: Modular design for easy expansion
 
@@ -176,7 +176,7 @@ MONGODB_DB=rockfall_db
 MAPMYINDIA_ACCESS_TOKEN=your_token
 
 # Email Alerts
-SENDGRID_API_KEY=your_key
+Vonage_API_KEY=your_key
 ALERT_EMAIL_FROM=alerts@domain.com
 ALERT_EMAIL_TO=team@domain.com
 
@@ -213,7 +213,7 @@ ALERT_SMS_TO=+1234567890
 
 ## 🚨 Alert System
 
-### Email Notifications (SendGrid)
+### Email Notifications (Vonage)
 - Rich HTML formatting
 - Attachment support
 - Delivery tracking
@@ -251,7 +251,7 @@ CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
 1. **Model not found**: Run `python ml/train.py` first
 2. **API connection errors**: Check backend is running on port 8000
 3. **Map not loading**: Verify MapMyIndia token in `.env`
-4. **Alerts not sending**: Validate SendGrid/SMS77 credentials
+4. **Alerts not sending**: Validate Vonage/SMS77 credentials
 
 ### Debug Mode
 ```bash
@@ -270,9 +270,6 @@ streamlit run streamlit_app/app.py --logger.level=debug
 4. Push to branch: `git push origin feature/new-feature`
 5. Submit pull request
 
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 👥 Team
 
@@ -284,6 +281,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🙏 Acknowledgments
 
 - MapMyIndia for mapping services
-- SendGrid for email infrastructure
-- SMS77 for SMS capabilities
+- Vonage for SMS capabilities
 - Open-source ML and web frameworks
+
+
+## Output
+
+🪨 Alert System
+

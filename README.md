@@ -271,6 +271,7 @@ streamlit run streamlit_app/app.py --logger.level=debug
 5. Submit pull request
 
 
+
 ## 👥 Team
 
 - **ML Engineering**: Predictive modeling and feature engineering
@@ -284,8 +285,38 @@ streamlit run streamlit_app/app.py --logger.level=debug
 - Vonage for SMS capabilities
 - Open-source ML and web frameworks
 
-
 ## Output
 
 🪨 Alert System
+- Vonage for email infrastructure
+- SMS77 for SMS capabilities
+
+## Output
+
+1) Using Leaflet and Openstreet API red zones show which are prone, green zones show which are safe and yellow which are medium risk
+![WhatsApp Image 2025-09-28 at 17 49 08_25d1e012](https://github.com/user-attachments/assets/07175b45-8323-4f11-ad21-f399b3aaea35)
+
+<img width="887" height="827" alt="image" src="https://github.com/user-attachments/assets/52000dd8-807c-45a6-87c9-0f065974d5f9" />
+
+2) Alert Triggering System working Using Vonage
+![WhatsApp Image 2025-09-28 at 17 56 19_8ee269ff](https://github.com/user-attachments/assets/e871e0c7-3017-47c7-9d8a-15e4d4b2102e)
+
+![WhatsApp Image 2025-09-28 at 17 57 41_0cb78c21](https://github.com/user-attachments/assets/e520d5f8-9659-401e-875b-1539baaa5c86)
+
+3) Risk Predictions using graphs
+![WhatsApp Image 2025-09-28 at 17 55 32_8a7b97c5](https://github.com/user-attachments/assets/1fb4dcd4-7b06-4201-95b4-d4ba644baed1)
+
+![WhatsApp Image 2025-09-28 at 17 54 36_6bedff71](https://github.com/user-attachments/assets/4d968590-1e6f-4017-8148-34853f3244fc)
+
+4) Sensors
+![WhatsApp Image 2025-09-28 at 17 47 10_1ae893a8](https://github.com/user-attachments/assets/2d6a7ac6-b5e7-435a-a255-77b30de5b405)
+
+![WhatsApp Image 2025-09-28 at 17 47 32_bb9352f6](https://github.com/user-attachments/assets/bbdc55e0-7d76-4277-ad54-bbdf51da9207)
+
+
+
+
+
+
+
 

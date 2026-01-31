@@ -51,13 +51,18 @@ st.markdown("""
     
     /* Enhanced metric cards */
     .metric-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0891b2 0%, #0284c7 100%);
         padding: 1.5rem;
         border-radius: 15px;
         color: white;
         margin: 1rem 0;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         border: none;
+    }
+    
+    .metric-card h3, .metric-card p, .metric-card div {
+        color: white !important;
+        font-weight: bold;
     }
     
     /* Quick actions card with better contrast */
@@ -112,12 +117,16 @@ st.markdown("""
     
     /* Sidebar enhancements */
     .sidebar-info {
-        background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
         padding: 1.5rem;
         border-radius: 15px;
         color: white;
         margin: 1rem 0;
-        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        box-shadow: 0 5px 15px rgba(8, 145, 178, 0.3);
+    }
+    
+    .sidebar-info h3, .sidebar-info p, .sidebar-info div {
+        color: white !important;
     }
     
     /* Status indicators */
@@ -172,6 +181,27 @@ st.markdown("""
         color: #2d3436;
         margin: 1rem 0;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Sidebar layout fix */
+    [data-testid="stSidebar"] {
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+    
+    [data-testid="stSidebar"] .element-container {
+        margin-bottom: 1rem;
+    }
+    
+    /* Ensure all text is visible */
+    .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
+        color: #ecf0f1 !important;
+    }
+    
+    /* Dark theme text fixes */
+    .stTextInput label, .stSelectbox label, .stNumberInput label, .stDateInput label {
+        color: #ecf0f1 !important;
+        font-weight: bold;
     }
     
     /* Chart containers */

@@ -63,12 +63,23 @@ st.markdown("""
         margin: 0.5rem 0;
     }
     
+    .risk-card-high h3, .risk-card-high p, .risk-card-high div, .risk-card-high span, .risk-card-high label {
+        color: white !important;
+        font-weight: bold;
+    }
+    
     .risk-card-medium {
-        background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+        background: linear-gradient(135deg, #feca57 0%, #ff9800 100%);
         padding: 1rem;
         border-radius: 10px;
-        color: #2c2c2c;
+        color: #1a1a1a;
         margin: 0.5rem 0;
+        font-weight: bold;
+    }
+    
+    .risk-card-medium h3, .risk-card-medium p, .risk-card-medium div, .risk-card-medium span, .risk-card-medium label {
+        color: #1a1a1a !important;
+        font-weight: bold;
     }
     
     .risk-card-low {
@@ -79,6 +90,11 @@ st.markdown("""
         margin: 0.5rem 0;
     }
     
+    .risk-card-low h3, .risk-card-low p, .risk-card-low div, .risk-card-low span, .risk-card-low label {
+        color: white !important;
+        font-weight: bold;
+    }
+    
     .section-header {
         background: linear-gradient(90deg, #0891b2, #0284c7);
         padding: 0.8rem 1.5rem;
@@ -87,6 +103,21 @@ st.markdown("""
         font-weight: bold;
         margin: 1rem 0;
         text-align: center;
+    }
+    
+    .section-header h1, .section-header h2, .section-header h3, .section-header h4, .section-header p {
+        color: white !important;
+    }
+    
+    /* Ensure all dashboard text is visible */
+    .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
+        color: #ecf0f1 !important;
+    }
+    
+    /* Input labels visible */
+    .stTextInput label, .stSelectbox label, .stNumberInput label {
+        color: #ecf0f1 !important;
+        font-weight: bold !important;
     }
     
     .chart-container {

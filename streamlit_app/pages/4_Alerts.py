@@ -8,6 +8,32 @@ import os
 
 st.set_page_config(page_title='Alert Management', page_icon='🚨', layout='wide')
 
+# CSS for text visibility
+st.markdown("""
+<style>
+    /* Ensure all text is visible on dark theme */
+    .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
+        color: #ecf0f1 !important;
+    }
+    
+    /* Input labels */
+    .stTextInput label, .stSelectbox label, .stNumberInput label, .stCheckbox label, .stDateInput label {
+        color: #ecf0f1 !important;
+        font-weight: bold !important;
+    }
+    
+    /* Tab labels */
+    .stTabs [data-baseweb="tab-list"] button [data-testid="stMarkdownContainer"] p {
+        color: #ecf0f1 !important;
+    }
+    
+    /* Metric values */
+    [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
+        color: #ecf0f1 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Check authentication
 if not st.session_state.get('auth', False):
     st.error("🔒 Please log in to access alert management")

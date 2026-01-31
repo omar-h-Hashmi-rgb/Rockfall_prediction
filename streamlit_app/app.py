@@ -446,12 +446,12 @@ def main_app():
                         labels={'probability': 'Risk Probability (%)', 'timestamp': 'Date & Time'}
                     )
                     
-                    # Enhanced styling with better visibility
+                    # Enhanced styling with professional colors
                     fig.update_traces(
-                        line_color='#667eea',
+                        line_color='#00d4ff',
                         line_width=4,
                         mode='lines+markers',
-                        marker=dict(size=8, color='#764ba2', line=dict(width=2, color='white'))
+                        marker=dict(size=8, color='#ff6b6b', line=dict(width=2, color='white'))
                     )
                     
                     fig.update_layout(
@@ -484,7 +484,7 @@ def main_app():
                         ),
                         hovermode='x unified',
                         hoverlabel=dict(
-                            bgcolor='#667eea',
+                            bgcolor='#ff6b6b',
                             font_size=14,
                             font_family='Arial',
                             font_color='white'

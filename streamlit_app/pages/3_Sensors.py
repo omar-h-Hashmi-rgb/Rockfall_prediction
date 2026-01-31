@@ -117,7 +117,7 @@ def display_sensor_data(df):
             if len(available_sensors) > 1:
                 # Create combined plot
                 fig = go.Figure()
-                colors = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D']
+                colors = ['#0891b2', '#0284c7', '#F18F01', '#C73E1D']
                 
                 for i, sensor in enumerate(available_sensors):
                     sensor_data = df[['timestamp', sensor]].dropna()

@@ -26,7 +26,7 @@ st.markdown("""
     
     /* Custom cards with better contrast */
     .custom-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
         padding: 1.5rem;
         border-radius: 15px;
         color: white;
@@ -46,7 +46,7 @@ st.markdown("""
     }
     
     .metric-card {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        background: linear-gradient(135deg, #0891b2 0%, #0284c7 100%);
         padding: 1.2rem;
         border-radius: 12px;
         color: white;
@@ -80,7 +80,7 @@ st.markdown("""
     }
     
     .section-header {
-        background: linear-gradient(90deg, #2E86AB, #A23B72);
+        background: linear-gradient(90deg, #0891b2, #0284c7);
         padding: 0.8rem 1.5rem;
         border-radius: 8px;
         color: white;

@@ -115,7 +115,26 @@ if analysis_mode == "Gallery View":
                         st.error(f"Error loading {img_path.name}: {str(e)}")
         else:
             st.warning("📂 No images found in the Images directory")
-            st.info("Expected path: data/DroneImages/FilteredData/Images/")
+            st.info(f"**Expected path:** `data/DroneImages/FilteredData/Images/`")
+            st.info(f"**Data location:** `{DATA_ROOT}`")
+            
+            # Production-friendly message
+            st.markdown("""
+            ---
+            ℹ️ **Note for Production Deployment:**
+            
+            Drone imagery files are not included in the Git repository due to their large size. 
+            
+            **To enable imagery analysis:**
+            1. Upload sample images to a cloud storage service (AWS S3, Google Cloud Storage, etc.)
+            2. Update the data path in the configuration
+            3. Or run this application locally where the image files are available
+            
+            **Current Status:**
+            - ✅ API and Database: Connected
+            - ✅ Sensors & Predictions: Working
+            - ⏸️ Imagery: Awaiting image data upload
+            """)
     
     # Masks Tab
     if show_masks and len(tab_objects) > 1:

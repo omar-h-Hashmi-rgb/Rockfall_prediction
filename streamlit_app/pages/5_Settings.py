@@ -8,6 +8,14 @@ st.set_page_config(page_title='Settings', page_icon='⚙️', layout='wide')
 # CSS for text visibility
 st.markdown("""
 <style>
+    /* Main background */
+    .main .block-container {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
     /* Ensure all text is visible on dark theme */
     .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
         color: #ecf0f1 !important;
@@ -27,6 +35,19 @@ st.markdown("""
     /* Metric values */
     [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
         color: #ecf0f1 !important;
+    }
+    
+    /* Form inputs */
+    .stTextInput > div > div > input {
+        background-color: rgba(45, 45, 45, 0.9) !important;
+        border: 2px solid #0891b2 !important;
+        color: white !important;
+    }
+    
+    /* Info boxes */
+    .stInfo {
+        background-color: rgba(8, 145, 178, 0.2) !important;
+        color: white !important;
     }
 </style>
 """, unsafe_allow_html=True)

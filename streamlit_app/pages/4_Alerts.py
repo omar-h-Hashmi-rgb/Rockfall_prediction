@@ -11,6 +11,14 @@ st.set_page_config(page_title='Alert Management', page_icon='🚨', layout='wide
 # CSS for text visibility
 st.markdown("""
 <style>
+    /* Main background */
+    .main .block-container {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
     /* Ensure all text is visible on dark theme */
     .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
         color: #ecf0f1 !important;
@@ -30,6 +38,15 @@ st.markdown("""
     /* Metric values */
     [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
         color: #ecf0f1 !important;
+    }
+    
+    /* Chart containers */
+    .chart-container {
+        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        margin: 1rem 0;
     }
 </style>
 """, unsafe_allow_html=True)

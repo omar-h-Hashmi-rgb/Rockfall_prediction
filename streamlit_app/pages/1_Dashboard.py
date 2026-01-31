@@ -122,10 +122,10 @@ st.markdown("""
     }
     
     .chart-container {
-        background-color: white;
+        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
         padding: 1rem;
         border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         margin: 1rem 0;
     }
 </style>
@@ -149,8 +149,8 @@ except:
 
 if not api_healthy:
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); 
-                padding: 1rem; border-radius: 10px; color: #2d3436; margin: 1rem 0;">
+    <div style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); 
+                padding: 1rem; border-radius: 10px; color: white; margin: 1rem 0; font-weight: bold;">
         ⚠️ <strong>API not accessible.</strong> Running in demo mode with India-wide simulation data.
     </div>
     """, unsafe_allow_html=True)

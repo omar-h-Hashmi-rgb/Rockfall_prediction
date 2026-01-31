@@ -150,10 +150,11 @@ st.markdown("""
     
     /* Form styling */
     .stTextInput > div > div > input {
-        background-color: rgba(255, 255, 255, 0.9);
-        border: 2px solid #ddd;
+        background-color: rgba(45, 45, 45, 0.9) !important;
+        border: 2px solid #0891b2 !important;
         border-radius: 10px;
         padding: 0.75rem;
+        color: white !important;
     }
     
     /* Button styling */
@@ -175,12 +176,16 @@ st.markdown("""
     
     /* Welcome section styling */
     .welcome-section {
-        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
         padding: 2rem;
         border-radius: 15px;
-        color: #2d3436;
+        color: white;
         margin: 1rem 0;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .welcome-section h1, .welcome-section h2, .welcome-section h3, .welcome-section h4, .welcome-section p, .welcome-section li, .welcome-section strong {
+        color: white !important;
     }
     
     /* Sidebar layout fix */
@@ -206,10 +211,10 @@ st.markdown("""
     
     /* Chart containers */
     .chart-container {
-        background: white;
+        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
         padding: 1.5rem;
         border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         margin: 1rem 0;
     }
 </style>

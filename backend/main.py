@@ -39,7 +39,7 @@ app.add_middleware(
 if not settings.debug:
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["localhost", "127.0.0.1", "*.yourdomain.com"]
+        allowed_hosts=["localhost", "127.0.0.1", "*.onrender.com", "*.streamlit.app", "rockfall-api-42w1.onrender.com"]
     )
 
 # Request timing middleware

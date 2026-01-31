@@ -442,13 +442,54 @@ def main_app():
                         df_predictions.head(10), 
                         x='timestamp', 
                         y='probability',
-                        title="Recent Risk Predictions",
-                        labels={'probability': 'Risk Probability', 'timestamp': 'Time'}
+                        title="<b>Recent Risk Predictions</b>",
+                        labels={'probability': 'Risk Probability (%)', 'timestamp': 'Date & Time'}
                     )
-                    fig.update_traces(line_color='#667eea', line_width=3)
+                    
+                    # Enhanced styling with better visibility
+                    fig.update_traces(
+                        line_color='#667eea',
+                        line_width=4,
+                        mode='lines+markers',
+                        marker=dict(size=8, color='#764ba2', line=dict(width=2, color='white'))
+                    )
+                    
                     fig.update_layout(
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        plot_bgcolor='rgba(0,0,0,0)'
+                        paper_bgcolor='#1e1e1e',
+                        plot_bgcolor='#2d2d2d',
+                        font=dict(color='white', size=14, family='Arial'),
+                        title=dict(
+                            font=dict(size=20, color='white', family='Arial'),
+                            x=0.5,
+                            xanchor='center'
+                        ),
+                        xaxis=dict(
+                            title=dict(text='<b>Date & Time</b>', font=dict(size=16, color='white')),
+                            showgrid=True,
+                            gridcolor='rgba(128, 128, 128, 0.2)',
+                            showline=True,
+                            linecolor='white',
+                            linewidth=2,
+                            tickfont=dict(size=12, color='white')
+                        ),
+                        yaxis=dict(
+                            title=dict(text='<b>Risk Probability (%)</b>', font=dict(size=16, color='white')),
+                            showgrid=True,
+                            gridcolor='rgba(128, 128, 128, 0.2)',
+                            showline=True,
+                            linecolor='white',
+                            linewidth=2,
+                            tickfont=dict(size=12, color='white'),
+                            tickformat='.0%'
+                        ),
+                        hovermode='x unified',
+                        hoverlabel=dict(
+                            bgcolor='#667eea',
+                            font_size=14,
+                            font_family='Arial',
+                            font_color='white'
+                        ),
+                        margin=dict(l=80, r=40, t=80, b=80)
                     )
                     
                     st.markdown('<div class="chart-container">', unsafe_allow_html=True)

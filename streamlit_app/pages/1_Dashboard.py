@@ -34,6 +34,17 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
     
+    .custom-card label {
+        color: white !important;
+        font-weight: bold !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .custom-card input, .custom-card .stSlider {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+    }
+    
     .metric-card {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         padding: 1.2rem;

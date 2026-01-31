@@ -7,8 +7,8 @@ load_dotenv()
 
 class Settings(BaseModel):
     # Database settings
-    mongodb_uri: str = os.getenv('MONGODB_URI', 'mongodb://localhost:27017')
-    mongodb_db: str = os.getenv('MONGODB_DB', 'rockfall_db')
+    mongodb_uri: str = os.getenv('MONGODB_URI', 'mongodb+srv://omarhashmi494:ZHu-S9GW%2A3g8RNL@cluster0.riblcv4.mongodb.net/rockfall?retryWrites=true&w=majority&appName=Cluster0')
+    mongodb_db: str = os.getenv('MONGODB_DB', 'rockfall')
     
     # MapMyIndia settings
     mapmyindia_access_token: str = os.getenv('MAPMYINDIA_ACCESS_TOKEN', '')

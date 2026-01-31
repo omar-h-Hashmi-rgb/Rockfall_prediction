@@ -20,8 +20,9 @@ st.markdown("""
     /* Main background improvements */
     .main .block-container {
         padding-top: 2rem;
-        background-color: #f8f9fa;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
     
     /* Custom cards with better contrast */

@@ -30,10 +30,10 @@ st.markdown("""
 <style>
     /* Main app background */
     .main .block-container {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
         padding: 2rem;
         border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
     
     /* Main header styling */
